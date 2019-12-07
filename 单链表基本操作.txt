@@ -1,0 +1,260 @@
+//实现单向链表基本操作
+
+//构造有一个单链表
+class Node{
+    //data表示单链表一个节点的值
+    //next表示指向下一个节点的地址
+    private int data;
+    //next指向Node类的一个对象的地址，next是一个引用
+    Node next;
+
+    //构造方法
+    public Node(int data,Node next){
+        this.data=data;
+        this.next=next;
+    }
+
+    //提供getter和setter方法
+    public int getData() {
+        return data;
+    }
+
+    public void setData(int data) {
+        this.data = data;
+    }
+
+}
+
+
+//操作单链表的方法
+
+public class thelist {
+    //size表示有多少个节点
+    private int size;
+    //first表示永远指向单链表的头节点
+    private Node first;
+    //last表示永远指向单链表的尾节点
+    private Node last;
+
+    //尾插法
+    public void addLast(int data){
+        //产生一个新的节点
+        Node newnode = new Node(data,null);
+        //判断如果没有节点
+        if(last==null){
+            last=first=newnode;
+            size++;
+            return;
+        }
+        last.next=newnode;
+        last=newnode;
+        size++;
+    }
+
+    //头插法
+    public void addFirst(int data){
+        Node newnode = new Node(data,null);
+        if(first==null){
+            first=last=newnode;
+            size++;
+            return;
+        }
+        newnode.next=first;
+        first=newnode;
+        size++;
+    }
+
+    //从任意index位置插入
+    //index节点的索引
+    public void addIndex(int index,int data){
+        //判断index的合法性
+        if(YNindex(index)==false){
+            return;
+        }
+        //如果输入的index等于size，表示从最后一个节点的位置插入。
+        else if(index==size){
+            addLast(data);
+        }
+        else if(index==0){
+            addFirst(data);
+        }
+        else{
+            Node newnode = new Node(data,null);
+            //要想在index位置插入节点必须知道index前面一个节点(前驱节点)
+            Node tpy=beforeIndex(index-1);
+            newnode.next=tpy.next;
+            tpy.next=newnode;
+            size++;
+        }
+    }
+
+    //根据用户传入的索引index，获取节点值
+    public int get(int index){
+        //判断index合法性
+        if(YNindex(index)){
+            Node tpy=beforeIndex(index);
+            System.out.print(tpy.getData());
+            return tpy.getData();
+        }
+        return -1;
+    }
+
+    //查询表中是否有指定内容节点
+    public boolean exist(int data){
+        //遍历链表
+        Node temp=first;
+        while(temp!=null){
+            if(temp.getData()==data){
+                System.out.print("节点存在!");
+                return true;
+            }
+            temp=temp.next;
+        }
+        System.out.print("未找到节点!");
+        return false;
+    }
+
+    //修改指定index位置data的值
+    public void Alter(int index,int data){
+        if(YNindex(index)){
+            Node temp=beforeIndex(index);
+            temp.setData(data);
+        }
+    }
+
+    //删除链表中的节点
+    public void remove(int data){
+        //如果要删除的是头结点
+        if(first.getData()==data){
+            first=first.next;
+            size--;
+            return;
+        }else{
+            Node tpy=first;
+            while(tpy.next!=null){
+                //tpy.next.getData()代表tpy下一个节点的内容
+                if(tpy.next.getData()==data){
+                    //此时tpy就是待删除节点的前驱节点
+                    tpy.next=tpy.next.next;
+                    size--;
+                    return;
+                }
+                else{
+                    tpy=tpy.next;
+                }
+            }
+        }
+    }
+
+    //删除所有值为data的值
+    public void removeall(int data){
+        while(first!=null&&first.getData()==data){
+            first=first.next;
+            size--;
+        }
+
+        //此时头结点一定是不用删除的节点
+        if(first==null){
+            return;
+        }
+        else{
+            Node tpy = first;
+            while(tpy.next!=null){
+                if(tpy.next.getData()==data){
+                    tpy.next=tpy.next.next;
+                    size--;
+                }
+                else{
+                    tpy=tpy.next;
+                }
+
+            }
+        }
+
+    }
+
+
+
+
+
+
+
+
+    //遍历一个链表，从头到尾打印
+    public void print(){
+        Node temp=first;
+        //如果temp不为空，则打印
+        while(temp!=null){
+            System.out.print(temp.getData());
+            System.out.print(" ");
+            temp=temp.next;
+        }
+        System.out.println();
+    }
+
+//判断index的合法性方法
+    //因为用户可以不用看到，所以可以封装起来
+    private boolean YNindex(int index){
+        //index小于0或者index比节点的数量size大时非法
+        if(index<0||index > size){
+            System.out.print("索引非法！");
+            return false;
+        }
+        return true;
+    }
+
+//根据index值找到对应节点
+    private Node beforeIndex(int index){
+        Node temp=first;
+        for (int i = 0; i <index ; i++) {
+            temp=temp.next;
+        }
+        return temp;
+    }
+
+}
+
+
+
+
+
+public class Test {
+    public static void main(String[] args) {
+        thelist a=new thelist();
+        //尾插法测试
+        a.addLast(1);
+        a.addLast(2);
+        a.addLast(3);
+        a.addLast(4);
+        a.addLast(5);
+        a.print();
+        //头插法测试
+        //a.addFirst(1);
+        //a.addFirst(2);
+        //a.addFirst(3);
+        //a.print();
+        //中间插入测试
+        //a.addIndex(2,10);
+        //a.addIndex(4,20);
+        //a.print();
+        //获取值测试
+        //a.get(4);
+        //检查是否存在元素测试
+        //a.exist(5);
+        //a.exist(8);
+        //修改指定位置的data
+        //a.Alter(3,10);
+        //a.print();
+        //删除测试
+        //a.remove(3);
+        //a.print();
+        a.removeall(1);
+        a.print();
+
+
+
+    }
+
+
+
+}
