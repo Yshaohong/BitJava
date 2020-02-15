@@ -1,0 +1,27 @@
+/*删除倒数第k个节点*/
+public class leetcode19 {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        /*判断链表是否为空*/
+        if (head == null || head.next == null) {
+            return null;
+        }
+        ListNode fast = head;
+        ListNode sec = head;
+        int count = 0;
+        while (fast != null) {
+            fast = fast.next;
+            count++;
+            if (count >= n + 2) {
+                sec = sec.next;
+            }
+        }
+        /*此时在待删除节点前一个位置*/
+        /*如果此时count等于n，则说明删除的为头结点*/
+        if (count == n) {
+            return head.next;
+        } else {
+            sec.next = sec.next.next;
+            return head;
+        }
+    }
+}
