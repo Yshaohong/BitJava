@@ -1,0 +1,30 @@
+//（牛客网）
+//编写代码，以给定值x为基准将链表分割成两部分，所有小于x的结点排在大于或等于x的结点之前
+//
+//给定一个链表的头指针 ListNode* pHead，请返回重新排列后的链表的头指针。注意：分割以后保持原来的数据顺序不变。
+public class Partition1 {
+    public ListNode partition(ListNode pHead, int x) {
+       if(pHead==null||pHead.next==null){
+           return pHead;
+       }
+       ListNode smallHead = new ListNode(-1);
+       ListNode smallTemp = smallHead;
+
+       ListNode bigHead = new ListNode(-1);
+       ListNode bigTemp= bigHead;
+
+       while (pHead!=null){
+           if(pHead.val<x){
+               smallTemp.next=pHead;
+               smallTemp=pHead;
+           }else{
+               bigTemp.next=pHead;
+               bigTemp=pHead;
+           }
+           pHead=pHead.next;
+       }
+       bigTemp.next=null;
+       smallTemp.next=bigHead.next;
+       return smallHead.next;
+    }
+}
