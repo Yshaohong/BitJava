@@ -1,0 +1,19 @@
+public class Solution876 {
+    public ListNode middleNode(ListNode head) {
+        ListNode temp=head;
+        int len=0;
+        while (temp!=null){
+            len++;
+            temp=temp.next;
+
+        }
+        System.out.println(len);
+        //返回
+        temp=head;
+        for (int i = 0; i <len/2 ; i++) {
+            temp=temp.next;
+        }
+        return temp;
+    }
+
+}
