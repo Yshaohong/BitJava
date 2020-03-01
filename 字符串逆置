@@ -1,0 +1,41 @@
+//给一个字符类型的数组chas和一个整数size，请把大小为size的左半区整体右移到右半区，右半区整体移动到左边。
+package String1;
+import java.util.Scanner;
+public class String2 {
+    //逆置
+    public static String reverse(String str,int left,int right) {
+        char[] value = str.toCharArray();
+        while (left < right) {
+            char ch = value[left];
+            value[left] = value[right];
+            value[right] = ch;
+            left++;
+            right--;
+        }
+        //return new String(value);
+        return String.copyValueOf(value);//将数组变为字符串
+    }
+
+    public static String func(String str,int k) {
+        if(k<0||k>str.length()){
+            return null;
+        }
+        else {
+            String str1 = reverse(str, 0, k - 1);
+            str1 = reverse(str1, k, str.length() - 1);
+            String str2 = reverse(str1, 0, str.length() - 1);
+            return str2;
+        }
+    }
+
+    public static void main(String[] args) {
+        //输入的处理
+        Scanner scanr=new Scanner(System.in);
+        String str=scanr.nextLine();
+
+        String a1=str;
+        String a2=a1;
+        a2=func(a1,3);
+   System.out.println(a2);
+    }
+}
