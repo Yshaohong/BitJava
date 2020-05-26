@@ -1,0 +1,133 @@
+package List;
+
+/**
+ * @Author: yang
+ * @Description:单链表实现
+ * @Date: 2020/5/26 12:58
+ */
+
+//生产一个节点
+    //Node类是SingleLinkedList2来使用
+class Node{
+
+    private int data;
+    private Node next;
+
+    public Node(int data, Node next) {
+        //节点的元素
+        this.data = data;
+        //下一个节点的地址
+        this.next = next;
+    }
+
+    public int getData() {
+        return data;
+    }
+
+    public void setData(int data) {
+        this.data = data;
+    }
+
+    public Node getNext() {
+        return next;
+    }
+
+    public void setNext(Node next) {
+        this.next = next;
+    }
+}
+
+public class SingleLinkedList2 {
+    //head永远指向头结点
+private Node head;
+private int size;
+private Node last;
+
+
+//用户默认尾插
+    public void add(int data){
+        addlast(data);
+    }
+    //尾插法
+    public void addlast(int data){
+        //生产一个新节点
+        Node node=new Node(data,null);
+        //判断是否有头结点
+        if(head==null){
+            head=last=node;
+            size++;
+            return;
+        }
+        //last永远指向尾节点
+        last.setNext(node);//(last.next=node;)
+        last=node;
+        size++;
+    }
+
+    //头插法
+    public void addfirst(int data){
+        //产生一个新的节点
+        Node node = new Node(data,null);
+        if(head==null){
+            head=last=node;
+            size++;
+            return;
+        }
+        node.setNext(head);
+        head=node;
+        size++;
+
+    }
+
+
+    
+    //打印单链表
+    public void print(){
+       //从头开始
+        Node temp=head;
+        while(head!=null){
+            System.out.print(head.getData()+" ");
+            head=head.getNext();
+        }
+    } 
+}
+
+
+package List;
+
+/**
+ * @Author: yang
+ * @Description:SingleLinkedList测试类
+ * @Date: 2020/5/26 12:15
+ */
+public class Test {
+    public static void main(String[] args) {
+        /*//产生节点
+        SingleLinkedList s1=new SingleLinkedList(1,null);
+        SingleLinkedList s2=new SingleLinkedList(2,null);
+        SingleLinkedList s3=new SingleLinkedList(3,null);
+        //需要将第二个节点挂在第一个节点上
+        s1.setNext(s2);
+        s2.setNext(s3);
+
+        //如何遍历链表结构
+        SingleLinkedList temp=s1;
+        while(temp!=null){
+            System.out.print(temp.getData()+" ");
+            temp=temp.getNext();
+        }*/
+
+
+        SingleLinkedList2 s=new SingleLinkedList2();
+        s.addfirst(1);
+        s.addfirst(2);
+        s.addfirst(3);
+        s.print();
+    }
+}
+
+
+
+
+
+
