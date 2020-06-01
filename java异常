@@ -1,0 +1,145 @@
+/**
+ * @Author: yang
+ * @Description:手动抛出异常（throws）
+ *
+ * 受查异常：编译时期出错的异常   一定要处理这种异常
+ * 非受查异常：空指针异常等
+ * @Date: 2020/6/1 10:57
+ */
+public class ExceptionDome1 {
+
+    public static void main(String[] args) {
+
+        //try-catch->处理异常
+        try {
+            int ret=func(10,0);
+            System.out.print(ret);
+        }catch (ArithmeticException e){
+           System.out.println("ArithmeticException");
+        }
+        System.out.print("After");
+
+    }
+
+    private static void func() {
+    }
+
+//声明了一个异常 方便方法的调用者去处理异常
+    public static int func(int a,int b) throws ArithmeticException
+    {
+        if (b==0){
+            //手动 抛出异常
+            throw new ArithmeticException();
+        }
+        return a/b;
+    }
+}
+
+****************************************************************************************************************************************
+
+
+/**
+ * @Author: yang
+ * @Description: try需要注意的问题
+ *             finally会抑制会抑制try中的return
+ *             finally一定会执行
+ *             finally会抑制catch中的return
+ *              结论：finally中一定不能写return
+ *
+ *  e.printStackTrace();当try语句中出现异常时，会执行catch中的语句
+ *  java运行时会将catch括号中的Exception e 初始化，e是此对象异常名称，然后调用 e.printStackTrace();
+ *   e.printStackTrace();意思是：在命令行打印异常信息在程序中出错的原因和位置
+ *
+ * @Date: 2020/6/1 11:14
+ */
+public class ExceptionDome2 {
+    public static void main(String[] args) {
+      System.out.print(div(10,0));
+    }
+
+    public static int div(int a,int b){
+      try{
+         int ret=a/b;
+         return ret;
+      }catch (ArithmeticException e){
+          e.printStackTrace();
+          return 88;
+          //finally一定会执行
+      }finally {
+          return 100;
+      }
+    }
+}
+
+***************************************************************************************************************************************
+
+/**
+ * @Author: yang
+ * @Description: 自定义异常类
+ *               条件：必须继承Expection类
+ * @Date: 2020/6/1 12:09
+ */
+public class ExceptionDome3 {
+
+    /*static class MyExpection extends Exception{
+
+        public MyExpection(String msg){
+         super(msg);
+        }
+    }
+
+
+    public static void main(String[] args) {
+       int b=0;
+       if (b==0){
+           try {
+               throw new MyExpection("Yichang");
+           } catch (MyExpection myExpection) {
+               myExpection.printStackTrace();
+           }
+       }
+
+    }
+*/
+
+
+
+    /**
+            * @Author: yang
+ * @Description: 自定义异常类
+     * 当你自定义的异常，继承于RuntimeExpection时，代表是运行时期的异常（非受查类异常）
+     * 当你自定义的异常，直接继承于Expection时，代表是编译时期的异常（受查类异常）->必须处理才能编译通过
+ * @Date: 2020/6/1 12:09
+            */
+
+
+    static class MyExpection extends RuntimeException{
+
+        public MyExpection(String msg){
+            super(msg);
+        }
+    }
+
+
+    public static void main(String[] args) {
+        int b=0;
+        if (b==0){
+            throw new MyExpection("Yichang");
+        }
+
+    }
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
