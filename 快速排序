@@ -1,0 +1,66 @@
+package Rank;
+
+import java.util.Arrays;
+
+/**
+ * @Author: yang
+ * @Description: 快速排序（分治思想）
+ * @Date: 2020/6/2 15:11
+ */
+public class QuickSort {
+
+    public static int partion(int[] array,int left,int right) {
+        int tmp = array[left];
+        //找到基准  pivot(就是left与right相遇时的值)
+        while (left < right) {
+            //right往left方向走
+            while (left < right && array[right] >= tmp) {
+                right--;
+            }
+            if(left >= right) {
+                break;
+            }else {
+                array[left] = array[right];
+            }
+
+            //right往left方向走
+            while (left < right && array[left] <= tmp) {
+                left++;
+            } if(left >= right) {
+                break;
+            }else {
+                array[right] = array[left];
+            }
+        }
+        //left与right相遇时
+        array[left] = tmp;
+        return left;
+    }
+
+
+    public static void quick(int[] array,int start,int end){
+
+
+
+        //递归结束程序
+        if (start>=end){
+            return;
+        }
+        int pivot = partion(array,start,end);
+        //左边右边分别继续排序
+        quick(array,0,pivot-1);
+        quick(array,pivot+1,end);
+    }
+
+    public static void quickQuetion(int[] array){
+        quick(array,0,array.length-1);
+
+    }
+
+    public static void main(String[] args) {
+        int[] array={11,12,5};
+        quickQuetion(array); ;
+        System.out.print(Arrays.toString(array));
+    }
+
+}
