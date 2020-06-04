@@ -1,0 +1,40 @@
+import java.util.Scanner;
+
+/**
+ * @Author: yang
+ * @Description: 读入一个字符串，输出字符串中连续最长的数字串
+ * @Date: 2020/6/4 11:01
+ */
+public class day03_1 {
+
+    public static void main(String[] args) {
+    //输入一个字符串
+        Scanner sc = new Scanner(System.in);
+        String s =null;
+        //count 表示记录遍历过程中数字的个数
+        int count = 0;
+        //记录最长的数字串
+        int maxLenght =0;
+        //记录数字串的最后一个数字下标
+
+        int end = 0;
+        while (sc.hasNext()){
+            s = sc.nextLine();
+            for (int i = 0; i <s.length() ; i++) {
+                if (s.charAt(i)>='0' && s.charAt(i)<='9'){
+                    count++;
+                    if (count>maxLenght){
+                        end=i;
+                        maxLenght=count;
+                    }
+                    //保存maxlenght之后count置位0，继续循环
+                }else {
+                    count = 0;
+                }
+            }
+            System.out.println(s.substring(end-maxLenght+1,end+1) ) ;
+        }
+
+    }
+
+}
