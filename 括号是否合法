@@ -1,0 +1,42 @@
+package EveryQuestion;
+
+import java.util.Scanner;
+
+/**
+ * @Author: yang
+ * @Description: 给定一个字符串A和它的长度n，请返回一个bool值代表他是否为一个合法的
+ *               括号串，一个合法的括号串定义：只包括括号字符；左括号和右括号以一一对应
+ * @Date: 2020/6/4 13:25
+ */
+public class day03_2 {
+    public static boolean Kuohao(String A, int n){
+        //转换为字符数组
+      char[] a=A.toCharArray();
+      int count = 0;
+
+        for (int i = 0; i <n ; i++) {
+            //1.只包括“（）”
+            if (a[i] != '(' && a[i] != ')') {
+                return false;
+            } else {
+                if (a[i] == '(') {
+                    count++;
+                } else count--;
+            }
+            if (count < 0) {
+                return false;
+            }
+        }
+        if (count==0){ return true; }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String s = scanner.nextLine();
+        int n=s.length();
+        System.out.println(Kuohao(s,n));
+
+
+    }
+}
