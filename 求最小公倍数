@@ -1,0 +1,40 @@
+package EveryQuestion;
+
+import java.util.Scanner;
+
+/**
+ * @Author: yang
+ * @Description: 求两个数的最小公倍数
+ * @Date: 2020/6/9 16:18
+ */
+public class day07_2 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNext()) {
+            int A = scanner.nextInt();
+            int B = scanner.nextInt();
+            int Minmul=A*B/MaxFac(A,B);
+            System.out.println(Minmul);
+
+        }
+    }
+
+
+
+    public static int MaxFac(int a,int b){
+        if (b>a){
+            int t =a;
+            a=b;
+            b=t;
+        }
+        int max;
+        while (b!=0){
+            max=a%b;
+            a=b;
+            b=max;
+        }
+        return a;
+    }
+
+
+}
