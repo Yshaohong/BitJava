@@ -1,0 +1,25 @@
+/**
+ * @Author: yang
+ * @Description: 在一组数的编码中，若任意两个相邻的代码只有一位二进制数不同
+ *                则称这种编码为格雷码(Gray Code)，请编写一个函数，使用递归的方法生成N位的格雷码。
+ * @Date: 2020/6/14 11:51
+ */
+public class day12_2 {
+    public String[] getGray(int n) {
+        if(n==1){
+            return  new String[]{"0","1"};
+        }
+        String[] str = getGray(n-1);
+        int len = str.length;
+        String[] str2 = new String[len*2];
+        for (int i = 0;i<str2.length;i++){
+            if(i<len){
+                str2[i]="0"+str[i];
+            }else {
+                str2[i]="1"+str[str2.length-1-i];
+            }
+        }
+        return str2;
+    }
+
+}
