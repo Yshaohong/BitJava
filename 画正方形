@@ -1,0 +1,36 @@
+package EveryQuestion;
+
+import java.util.Scanner;
+
+/**
+ * @Author: yang
+ * @Description: 画正方形
+ * @Date: 2020/6/15 12:34
+ */
+public class day13_1 {
+    public static void main(String[] args) {
+        Scanner sc =new Scanner(System.in);
+        //n为列，y为行
+        int n =sc.nextInt();
+        double y =(int)Math.round(n/2);
+        //读取字符
+        String str =sc.nextLine();
+
+        for (int i =0;i<y;i++){
+            if (i==0||i==(y-1)){
+                for (int k=0;k<n;k++){
+                    System.out.print(str);
+                }
+                   System.out.println();
+            }else {
+                System.out.print(str);
+                for (int x=0;x<((n-2)*2);x++){
+                     System.out.print(" ");
+                }
+                System.out.println(str);
+            }
+
+        }
+
+    }
+}
