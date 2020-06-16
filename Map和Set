@@ -1,0 +1,107 @@
+package ShujuJiegou;
+
+import java.util.*;
+
+/**
+ * @Author: yang
+ * @Description: Map和Set
+ * @Date: 2020/6/16 14:02
+ */
+
+public class MapSet {
+
+    //list中存放10万个数据，找出第一个重复的数据
+    public static void main1(String[] args) {
+    //1.生成10万个随机数据
+        Random random = new Random();
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        for (int i = 0; i <10_0000 ; i++) {
+            arrayList.add(random.nextInt(60_000));
+
+        }
+    //2.往set里面开始放数据
+        HashSet<Integer> hashSet= new HashSet<>();
+        for ( Integer val:arrayList ) {
+            //利用contains判断集合中有没有这个数，有就打印
+            if (hashSet.contains(val)){
+                System.out.println(val);
+                return;
+            }
+            //没有就往里面放入
+            hashSet.add(val);
+        }
+    }
+
+    //list中有10万个数据，把重复的数字全部都去重
+    public static void main2(String[] args) {
+        Random random = new Random();
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        for (int i = 0; i < 10_0000; i++) {
+            arrayList.add(random.nextInt(60_000));
+
+        }
+        HashSet<Integer> hashSet = new HashSet<>();
+        for (Integer val : arrayList) {
+            hashSet.add(val);
+        }
+        System.out.println(hashSet);
+
+    }
+
+    //10万个数据，统计它出现重复的数字以及出现次数
+    public static void main3(String[] args) {
+        //随机生成10万个数
+        Random random = new Random();
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        for (int i = 0; i < 10_0000; i++) {
+            arrayList.add(random.nextInt(60_000));
+        }
+
+        HashMap<Integer,Integer> hashMap = new HashMap<>();
+        //k:数字v:次数
+        for (Integer key:arrayList) {
+            if (hashMap.get(key)!=null){
+                //设置k对应的v
+                hashMap.put(key,1);
+            }else {
+                Integer val = hashMap.get(key);
+                hashMap.put(key,val+1);
+            }
+        }
+        for (Map.Entry<Integer,Integer> entry:hashMap.entrySet()) {
+           System.out.println("重复的数字："+entry.getKey()+"重复的次数："+entry.getValue());
+        }
+
+    }
+
+    //找出一组数据中的不重复的一个数
+    public int singleNumber(int[] nums){
+        int ret =0;
+        for (int i = 0; i <nums.length ; i++) {
+            ret^=nums[i];
+        }
+        return ret;
+    }
+    public static void main4(String[] args) {
+        int[] nums = {2,1,2,1,4};
+        MapSet set =new MapSet();
+
+       System.out.println(set.singleNumber(nums));
+    }
+
+
+   //2.通过set完成
+   public static void main(String[] args) {
+       int[] num = {4,1,2,1,2};
+       HashSet<Integer> set =new HashSet();
+       for (int i = 0; i <num.length ; i++) {
+           if (!set.contains(num[i])){
+              set.add(num[i]);
+           }else {
+               set.remove(num[i]);
+           }
+       }
+       System.out.println(set);
+    }
+
+}
