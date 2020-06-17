@@ -1,0 +1,27 @@
+package ShujuJiegou;
+
+import java.util.HashSet;
+
+/**
+ * @Author: yang
+ * @Description: 宝石与石头
+ * @Date: 2020/6/16 17:26
+ */
+public class oj2 {
+    public int numJeweIsInStones(String J,String S){
+     int count=0;
+        HashSet<Character> set = new HashSet<>();
+        //1.把J中的字符存放在Set中
+        for (char j:J.toCharArray()) {
+            set.add(j);
+        }
+        //2.遍历字符串S，判断每一个字符是否存在与集合中，若存在count++
+        for (char s:S.toCharArray()) {
+            if(set.contains(s)){
+                count++;
+            }
+        }
+        return count;
+    }
+
+}
