@@ -1,0 +1,28 @@
+package EveryQuestion;
+
+import java.util.Scanner;
+
+/**
+ * @Author: yang
+ * @Description: 不使用运算符，使两个数相加
+ * @Date: 2020/6/18 20:27
+ */
+public class day15_1 {
+    public static int addAB(int A, int B) {
+        int m =A^B;
+        int n =(A&B)<<1;
+        int sum=m+n;
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        Scanner scannerc= new Scanner(System.in);
+        int a = scannerc.nextInt();
+        int b = scannerc.nextInt();
+        int s = addAB(a,b);
+        System.out.println(s);
+
+    }
+
+
+}
