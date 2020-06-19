@@ -1,0 +1,30 @@
+package EveryQuestion;
+
+import java.util.Scanner;
+
+/**
+ * @Author: yang
+ * @Description: 验证尼科彻斯定理，即：任何一个整数m的立方都可以写成m个连续奇数之和。
+ * @Date: 2020/6/16 20:42
+ */
+public class day14_2 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        while (sc.hasNext()){
+            int n =sc.nextInt();
+            int res =n*n*n;
+            int mid = n*n;
+            StringBuilder stringBuilder = new StringBuilder();
+            int begin = mid+1-n;
+            int end = mid-1+n;
+            for(;begin<=end;begin+=2){
+                if (begin==end){
+                    stringBuilder.append(begin);
+                    break;
+                }
+                stringBuilder.append(begin+"+");
+            }
+            System.out.println(stringBuilder.toString());
+        }
+    }
+}
