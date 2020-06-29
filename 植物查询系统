@@ -1,0 +1,561 @@
+#include <stdio.h> 
+#include <stdlib.h> 
+struct record 
+{ 
+char id[10]; 
+char name[20]; 
+char phone[20];
+ 
+}
+student[500]; 
+int num=0;  //外部变量num为文件中的纪录数
+FILE *fp; 
+void mainmenu();//主菜单 
+void newrecord();//新添纪录 
+void searchmenu();//查询菜单 
+void searchbyid();//按编号查询 
+void searchbyname();//按名称查询 
+void searchbydetailed(); 
+void deletemenu();//删除菜单  
+void showall();//显示所有 
+void xiugai();//修改信息
+void xiugaibyid();//按编号修改
+void xiugaibyname();//按名称修改
+void deletebyid();//按编号删除 
+void deletebyname();//删除 
+void listbyid();//按编号排序 
+void listbyname();//按名称排序 
+void listmenu();//排序菜单
+void main()
+{ 
+	int i; 
+	printf("请输入植物品种个数：\n");
+	scanf("%d",&num);
+	printf("请输入植物信息\n");
+	for(i=0;i<num;i++)
+	{   
+		printf("    第 %d 个植物的信息\n",i+1);
+		printf("    植物编号    :"); scanf("%s",&plants[i].id);getchar();
+		printf("    植物名称    :"); scanf("%s",&plants[i].name);getchar();
+		printf("    植物纲目:"); scanf("%s",&plants[i].detailed outline);getchar();
+
+	}
+	/*将数据输入文件*/
+	fp=fopen("stud","w");
+	for(i=0;i<num;i++)
+		if(fwrite(&plants[i],sizeof(struct record),1,fp)!=1)
+			printf("file write error\n");
+		fclose(fp);
+		mainmenu();
+}
+
+void mainmenu()/*主菜单*/
+{ 
+  char choic;  
+  if((fp=fopen("stud","r"))==NULL)
+  { 
+	  printf("\ncan not open file\n");
+	  exit(0);
+  }
+  printf("\n\t\t******************** 主菜单 ********************"); 
+  printf("\n\t\t*********** 1-新添纪录 2-查询菜单 ************"); 
+  printf("\n\t\t*********** 3-删除菜单 4-记录排序 ************"); 
+  printf("\n\t\t*********** 5-修改信息 6-退出*****************************"); 
+  printf("\n\t\t************************************************"); 
+  printf("\n\t\t请选择："); 
+  choic=getchar(); 
+  getchar();
+  switch (choic) 
+  { 
+  case '1':newrecord();break; 
+  case '2':searchmenu();break; 
+  case '3':deletemenu();break; 
+  case '4':listmenu();break;  
+  case '5':xiugai();break;
+  case '6':exit(0);break;
+  default:mainmenu();
+  }
+}
+void newrecord()//添加纪录 
+{   
+	char m;
+	printf("\n\t\t**************** 请输入植物信息 ****************\n"); 
+	printf("\n\t\t输入编号:"); 
+	scanf("%s",&plants[num].id); getchar();
+	printf("\n\t\t输入名称:"); 
+	scanf("%s",&plants[num].name); getchar();
+	printf("\n\t\t输入植物纲目:"); 
+	scanf("%s",&plants[num].detailed outline); getchar();
+	num++; 
+	printf("\n\t\t是否继续添加?(y/n):"); 
+	m=getchar();
+	getchar();
+	if (m=='y') 
+		newrecord(); 
+	else
+		mainmenu();
+} 
+void searchmenu()//查询菜单 
+{ 
+	char choic; 
+	printf("\n\t\t******************* 查询菜单 *******************"); 
+	printf("\n\t\t********** 1-显示所有 2-按编号查询 ************"); 
+	printf("\n\t\t********** 3-按名称查询4-按纲目查询 ************"); 
+	printf("\n\t\t********** 5-返回主菜单 ************"); 
+	printf("\n\t\t************************************************"); 
+	printf("\n\t\t请选择："); 
+	choic=getchar(); 
+	getchar();
+	switch (choic) 
+	{ 
+	case '1':showall();break; 
+	case '2':searchbyid();break; 
+	case '3':searchbyname();break; 
+	case '4':searchbyphone();break; 
+	case '5':mainmenu();break; 
+	} 
+} 
+void showall()//显示所有 
+{ 
+	int i; 
+	if(num!=0) 
+	{ 
+		printf("\n\t\t*************** 以下为录入植物所有信息************"); 
+		for (i=0;i<num;i++) 
+		{ 
+			printf("\n\t\t编号： %s",plants[i].id); 
+			printf("\n\t\t名称： %s",plants[i].name); 
+			printf("\n\t\t纲目： %s",plants[i].detailed outline); 
+ 
+		} 
+		printf("\n\t\t************************************************"); 
+	} 
+	else 
+	{
+		printf("\n\t\t无信息"); 
+		 
+	}
+	printf("\n\t\t按回车键返回主菜单：");
+	getchar(); 
+	mainmenu(); 
+} 
+void searchbyid()//按编号查询 
+{ 
+	int mark=0; 
+	int i;  
+	printf("\n\t\t****************** 按编号查找 ******************\n"); 
+	char id[10]; 
+	printf("\n\t\t请输入编号:"); 
+	scanf("%s",id); 
+	getchar();
+	for(i=0;i<num;i++) 
+	{ 
+		if (strcmp(plants[i].id,id)==0) 
+		{ 
+			printf("\n\t\t************** 以下是您查找的植物信息 **********"); 
+			printf("\n\t\t编号： %s",plants[i].id); 
+			printf("\n\t\t名称： %s",plants[i].name); 
+			printf("\n\t\t纲目： %s",plants[i].detailed outline);  
+			printf("\n\t\t************************************************");  
+			mark++; 
+		} 
+	} 
+	if (mark==0) 
+	{ 
+		printf("\n\t\t未修改植物的信息"); 
+		printf("\n\t\t按回车键返回主菜单"); 
+		getchar(); 
+	    mainmenu();
+	} 
+	printf("\n\t\t按回车键返回主菜单：");
+	getchar(); 
+	mainmenu();
+}
+void searchbyname()//按名称查询 
+{ 
+	int i,k=0;  
+	printf("\n\t\t***************** 按名称查找 *******************"); 
+	char name[20]; 
+	printf("\n\t\t请输入名称:"); 
+	scanf("%s",name); 
+	for(i=0;i<num;i++) 
+	{ 
+		if (strcmp(plants[i].name,name)==0) 
+		{ 
+			printf("\n\t\t************* 以下是您查找的植物信息 ***********"); 
+			printf("\n\t\t编号： %s",plants[i].id); 
+			printf("\n\t\t名称： %s",plants[i].name); 
+			printf("\n\t\t纲目： %s",plants[i].detailed outline);  
+			printf("\n\t\t************************************************"); 
+			k=1;
+			getchar();
+		}
+	}
+	if(k==0)
+	{
+		printf("你输入的植物不存在\n");
+		getchar();
+	}
+	printf("\n\t\t按回车键返回主菜单：");
+	getchar(); 
+	mainmenu();
+} 
+
+//按纲目查询 
+void searchbydetailed outline() 
+{ 
+	int i;
+	int mark=0;
+	printf("\n\t\t****************** 按纲目查找 ******************"); 
+	char detailed outline[10]; 
+	printf("\n\t\t请输入纲目:"); 
+	scanf("%s",detailed outline); 
+	for(i=0;i<num;i++) 
+	{ 
+		if (strcmp(plants[i].detailed outline,detailed outline)==0) 
+		{ 
+			printf("\n\t\t************** 以下是您查找的植物信息 **********"); 
+			printf("\n\t\t编号： %s",plants[i].id); 
+			printf("\n\t\t名称： %s",plants[i].name); 
+			printf("\n\t\t纲目： %s",plants[i].detailed outline); 
+			printf("\n\t\t************************************************"); 
+			mark++; 
+		} 
+	} 
+	if (mark==0) 
+	{ 
+		printf("\n\t\t未修改植物的信息"); 
+		
+	} 
+	printf("\n\t\t按回车键返回主菜单");
+	getchar(); 
+	mainmenu();
+} 
+void deletemenu()//删除菜单 
+{ 
+	char choic; 
+	if(num==0) 
+	{ 
+		printf("\n\t\t对不起，文件中无任何纪录"); 
+		printf("\n\t\t按回车键返回主菜单"); 
+		getchar(); 
+	    mainmenu();
+	} 
+	printf("\n\t\t******************* 删除菜单 *******************"); 
+	printf("\n\t\t*********** 1-按名称删除2-按编号删除  ***********"); 
+	printf("\n\t\t*********** 3-返回主菜单 ***********"); 
+	printf("\n\t\t************************************************"); 
+	printf("\n\t\t请选择："); 
+	choic=getchar(); 
+	getchar();
+	switch (choic) 
+	{ 
+	case '1':deletebyname();break; 
+	case '2':deletebyid();break; 
+	case '3':mainmenu();break; 
+	} 
+} 
+void deletebyname()//按名称删除 
+{
+	int deletemark=0; 
+	int i,j;   char p;
+	char name[20]; 
+	printf("\n\t\t请输入要删除植物名称："); 
+	scanf("%s",name); 
+	getchar();
+	if(num==0) 
+	{ 
+		printf("\n\t\t对不起，文件中无任何纪录"); 
+		printf("\n\t\t按回车键返回主菜单"); 
+		getchar(); 
+	    mainmenu();
+	} 
+	for (i=0;i<num;i++) 
+	{
+		if (strcmp(plants[i].name,name)==0) 
+		{ 
+			printf("\n\t\t以下是您要删除的植物纪录："); 
+			deletemark++; 
+			printf("\n\t\t________________________________"); 
+			printf("\n\t\t编号： %s",plants[i].id); 
+			printf("\n\t\t名称： %s",plants[i].name); 
+			printf("\n\t\t纲目： %s",plants[i].detailed outline); 
+			printf("\n\t\t________________________________"); 
+			printf("\n\t\t是否删除?(y/n)");
+		    p=getchar();
+			getchar();
+			if(p=='y')
+			{
+			for(j=i;j<num-1;j++)/*纪录移动，从stud数组中删除之*/ 
+			
+			   plants[j]=plants[j+1];
+			   num--;
+			   printf("\n\t\t删除成功");
+			}
+		}
+	
+	}
+	if(deletemark==0)
+	{
+		printf("你输入的植物不存在\n");
+	}
+	printf("\n\t\t按回车键返回主菜单"); 
+	getchar();
+	mainmenu();
+	
+}
+void deletebyid()//按编号删除 
+{ 
+	int i,j;   
+	char q;
+	int deletemark=0; 
+	char id[20]; 
+	printf("\n\t\t请输入要删除植物编号："); 
+	scanf("%s",id); 
+	getchar();
+	if(num==0) 
+	{ 
+		printf("\n\t\t对不起，文件中无任何纪录"); 
+		printf("\n\t\t按任意键返回主菜单"); 
+		getchar(); 
+	    mainmenu();
+	} 
+	for (i=0;i<num;i++) 
+	{ 
+		if (strcmp(plants[i].id,id)==0) 
+		{ 
+			printf("\n\t\t以下是您要删除的植物纪录："); 
+			printf("\n\t\t编号： %s",plants[i].id); 
+			printf("\n\t\t名称： %s",plants[i].name); 
+			printf("\n\t\t纲目： %s",plants[i].detailed outline); 
+			printf("\n\t\t是否删除?(y/n)"); 
+			q=getchar();
+			getchar();
+			if (q=='y') 
+			{ 
+				for (j=i;j<num-1;j++) /*纪录移动，从stud数组中删除之*/ 
+				plants[j]=plants[j+1]; 
+				num--; 
+				deletemark++; 
+				printf("\n\t\t删除成功");
+				if (deletemark==0) 
+				{ 
+					printf("\n\t\t没有该植物的纪录"); 
+					printf("\n\t\t是否继续删除?(y/n)"); 
+					getchar();
+					if (getchar()=='y') 
+						deletebyid(); 
+					else
+				        mainmenu();
+				} 
+			} 
+		}
+	}
+	printf("\n\t\t按回车键返回主菜单:");
+	getchar();
+	mainmenu();
+}
+
+void listmenu()//排序菜单 
+{   
+	char choic; 
+	if(num==0) 
+	{ 
+		printf("\n\t\t对不起，文件中无任何纪录"); 
+		printf("\n\t\t按回车键返回主菜单"); 
+		getchar(); 
+		mainmenu();
+	} 
+	printf("\n\t\t******************* 排序菜单 *******************"); 
+	printf("\n\t\t********** 1-按编号排序 2-按名称排序 **********"); 
+	printf("\n\t\t********** 3-返回主菜单 **********"); 
+	printf("\n\t\t************************************************"); 
+	printf("\n\t\t请选择："); 
+	choic=getchar();
+	getchar();
+	switch(choic) 
+	{ 
+	case '1':listbyid();break; 
+	case '2':listbyname();break; 
+	case '3':mainmenu();break; 
+	} 
+}  
+void listbyid()//按编号排序 
+{ 
+	int i,j;
+	char p;
+	struct record tmp; 
+	for (i=0;i<num-1;i++) 
+		for(j=i+1;j<num;j++)
+		{ 
+			if(strcmp(plants[i].id,plants[j].id)<0) 
+			{ 
+				tmp=plants[i]; 
+				plsnts[i]=plants[j];
+				plants[j]=tmp; 
+			} 
+		} 
+		printf("\n\t\t排序成功,是否显示?(y/n)");
+		p=getchar();
+		getchar();
+		if (p=='y') 
+			showall(); 
+		else 
+			mainmenu();
+		
+} 
+void listbyname()//按名称排序 
+{ 
+	int i,j;
+	char p;  
+	struct record tmp; 
+	for (i=0;i<num-1;i++) 
+		for(j=i+1;j<num;j++)
+		{ 
+			if(strcmp(plants[i].id,plants[j].id)<0) 
+			{ 
+				tmp=plants[i]; 
+				plants[i]=plants[j];
+				plants[j]=tmp;
+			} 
+		} 
+		printf("\n\t\t排序成功,是否显示?(y/n)"); 
+		p=getchar();
+		getchar();
+		if (p=='y') 
+			showall(); 
+		else 
+			mainmenu();
+}
+void xiugai()//修改信息
+{   int choic;
+    printf("\n\t\t******************* 修改菜单 *******************"); 
+	printf("\n\t\t********** 1-按编号修改 2-按名称修改 **********"); 
+	printf("\n\t\t********** 3-返回主菜单 **********"); 
+	printf("\n\t\t************************************************"); 
+	printf("\n\t\t请选择："); 
+	choic=getchar();
+	getchar();
+	switch(choic) 
+	{ 
+	case '1':xiugaibyid();break; 
+	case '2':xiugaibyname();break; 
+	case '3':mainmenu();break; 
+	} 
+
+}
+void xiugaibyid()//按编号修改
+{
+    int mark=0; 
+	int i;    
+	char p,b;
+	printf("\n\t\t****************** 按编号修改******************\n"); 
+	char id[10]; 
+	printf("\n\t\t请输入编号:\n"); 
+	scanf("%s",id); 
+	getchar();
+	for(i=0;i<num;i++) 
+	{ 
+		if (strcmp(plants[i].id,id)==0) 
+		{ 
+			printf("\n\t\t************** 以下是您修改的植物信息 **********"); 
+			printf("\n\t\t编号： %s",plants[i].id); 
+			printf("\n\t\t名称： %s",plants[i].name); 
+			printf("\n\t\t纲目： %s",plants[i].detailed outline); 
+			printf("\n\t\t************************************************");  
+			mark++; 
+		}
+		printf("\n\t\tshifouxiugai:(y/n)\n");
+		p=getchar();
+		getchar();
+		if(p=='y')
+		{
+			printf("\n\t\tqingshuruxueshengxinxi:\n");
+			printf("    植物编号    :"); scanf("%s",&plants[i].id);getchar();
+			printf("    植物名称    :"); scanf("%s",&plants[i].name);getchar();
+			printf("    植物纲目:"); scanf("%s",&plants[i].detailed outline);getchar();
+			printf("\n\t\txiugaichenggong shifouxianshi lianxirenxinxi:(y/n)\n");
+			b=getchar();
+			getchar();
+			if(b=='y')
+			showall();
+			else
+			{
+				printf("\n\t\t按回车键返回主菜单：\n");
+				getchar(); 
+				mainmenu();
+			}
+		}
+		else
+		{
+			printf("\n\t\t按回车键返回主菜单：");
+			getchar(); 
+			mainmenu();
+		}
+	}
+	if (mark==0) 
+	{ 
+		printf("\n\t\t未修改植物的信息"); 
+		printf("\n\t\t按回车键返回主菜单"); 
+		getchar(); 
+	    mainmenu();
+	} 
+}
+void xiugaibyname()//按名称修改  
+{
+    int mark=0; 
+	int i;
+	char p,b;
+	printf("\n\t\t****************** 按名称修改******************\n"); 
+	char id[10]; 
+	printf("\n\t\t请输入名称:\n"); 
+	scanf("%s",id); 
+	getchar();
+	for(i=0;i<num;i++) 
+	{ 
+		if (strcmp(plants[i].id,id)==0) 
+		{ 
+			printf("\n\t\t************** 以下是您修改的植物信息 **********"); 
+			printf("\n\t\t编号： %s",plants[i].id); 
+			printf("\n\t\t名称： %s",plants[i].name); 
+			printf("\n\t\t纲目： %s",plants[i].detailed outline); 
+			printf("\n\t\t************************************************");  
+			mark++; 
+		}  
+		printf("\n\t\tshifouxiugai:(y/n)\n");
+	    p=getchar();
+	    getchar();
+		if(p=='y')
+		{
+			printf("\n\t\tqingshuruxueshengxinxi:\n");
+			printf("    植物编号    :"); scanf("%s",&plants[i].id);getchar();
+			printf("    植物名称    :"); scanf("%s",&plants[i].name);getchar();
+			printf("    植物纲目:"); scanf("%s",&plants[i].detailed outline);getchar();
+
+			printf("\n\t\txiugaichenggong shifouxianshi lianxirenxinxi:(y/n)");
+			b=getchar();
+			getchar();
+			if(b=='y')
+				showall();
+			else
+			{
+				printf("\n\t\t按回车键返回主菜单：\n");
+				getchar(); 
+				mainmenu();
+			}
+		}
+		else
+		{
+			printf("\n\t\t按回车键返回主菜单：");
+			getchar(); 
+			mainmenu();
+		}
+	}
+	if (mark==0) 
+	{ 
+		printf("\n\t\t未修改植物的信息"); 
+		printf("\n\t\t按回车键返回主菜单"); 
+		getchar(); 
+	    mainmenu();
+	} 
+}
