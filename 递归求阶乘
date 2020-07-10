@@ -1,0 +1,34 @@
+/递归求I的阶乘
+import java.util.Scanner;
+public class Cao{
+    public static int jieChen(int i){
+        int num=i;
+        if(num==0){
+            return 1;
+        }
+        else{
+            return num*jieChen(num-1);
+        }
+
+    }
+//递归求1+2+3....+i
+    public static int add(int i){
+    int num=i;
+    if(num==0){
+        return 0;
+    }
+    else{
+         return num+add(num-1);
+    }
+}
+
+
+
+    public static void main(String[] args){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入一个数：");
+        int i=scanner.nextInt();
+       System.out.println(jieChen(i));
+       System.out.println(add(i));
+    }
+}
