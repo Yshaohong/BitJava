@@ -1,0 +1,61 @@
+-- 创建数据库
+CREATE DATABASE java30;
+
+-- 选中需要的库
+USE java30;
+
+-- 创建一个表
+CREATE TABLE student1(
+
+    id int,
+	name varchar(10),
+	age int
+
+);
+
+-- 查看当前库中所有表
+show tables;
+
+-- 查看某张表中的所有数据
+SELECT*FROM student1;
+
+-- 插入数据到当前表中
+INSERT INTO student1(id,name,age) VALUES (1,'李坤',10);
+INSERT INTO student1(id,name,age) VALUES (2,'飞飞',11);
+
+-- 一次插入多行语句
+INSERT INTO student1(id,name,age) VALUES 
+(1,'李坤',10),
+(2,'小王',11),
+(3,'小李',18),
+(4,'小周',19);
+
+-- 查看当前是在哪个库底下
+SELECT DATABASE();
+
+-- 可选择创建数据库
+CREATE DATABASE  IF NOT EXISTS java30_1 CHARACTER SET UTF8mb4;
+
+-- 删除数据库
+DROP DATABASE java30;
+
+-- 时间类型
+CREATE TABLE student1(
+
+    id int COMMENT '编号',
+	name varchar(10) COMMENT '姓名',
+	age int COMMENT '年龄',
+	`time` DATETIME
+);
+
+-- 查看表的结构
+DESC student1;
+
+-- 查看建表语句
+SHOW CREATE TABLE student1;
+
+-- 查看建库语句
+SHOW CREATE DATABASE java30;
+
+-- 删除表
+DROP TABLE student1;
