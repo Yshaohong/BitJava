@@ -1,0 +1,55 @@
+-- 学生表
+CREATE TABLE student(
+
+   id INT COMMENT '编号'，
+   sn INT COMMENT '学号'，
+   name VARCHAR(10) COMMENT '姓名'，
+   qq_email VARCHAR(20) COMMENT '电子邮箱'
+
+);
+
+-- 单行数据+全列插入
+INSERT INTO student VALUES(100, 10000, '唐三藏', NULL);
+INSERT INTO student VALUES(101, 10001, '孙悟空', '11111');
+
+-- 单行指定列插入
+INSERT INTO student(id,sn,name) VALUES
+(102, 20001, '曹孟德'),
+(103, 20002, '孙仲谋');
+
+-- 全列查询
+SELECT * from student;
+
+-- 指定列查询
+SELECT id,sn,name from student;
+
+-- 查询一个表达式
+SELECT id+sn from student;
+
+-- 起别名
+SELECT id,sn,name as 姓名 from student;
+
+-- 去重
+SELECT DISTINCT id from student;
+
+-- 排序(order by)
+-- ASC  升序
+SELECT id from student order by  id asc;
+
+-- 条件查询
+SELECT * from student WHERE id > 0;
+-- 范围查询
+SELECT * from student WHERE id BETWEEN 0 and 10;
+-- IN操作符
+SELECT * from student WHERE id IN(1,2,4,5);
+-- 模糊查询
+SELECT id FROM student WHERE id LIKE '1%' -- 查询到以1开头的id
+
+-- 分页查询
+SELECT * from student order by id LIMIT 5;--从偏移位置开始取5条
+
+
+-- 修改update(更新)
+update student set id = 10 WHERE name ='唐三藏';
+
+-- 删除
