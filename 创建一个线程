@@ -1,0 +1,44 @@
+package Thread;
+
+/**
+ * @Author: yang
+ * @Description: 创建一个线程
+ * @Date: 2020/10/12 14:21
+ */
+public class ThreadDome {
+    static class MyThread extends Thread{
+        public void run(){
+            //线程入口方法，当线程启动后，就会执行到run方法中的逻辑
+            //这个方法不需要手动调用，是由JVM自动执行的
+           // System.out.println("Hello word！");
+
+            while (true){
+               System.out.println("我是新线程!");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        //向上转型
+        Thread t = new MyThread();
+        //调用start方法，就会在操作系统中创建1一个线程
+        //内核中就有一个PCB对象被加入到双向链表中
+        //当线程创建完毕后，就会自动执行run方法
+        //当run方法执行完毕后，线程自动销毁
+        t.start();
+        while (true){
+            System.out.println("我是主线程!");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+}
